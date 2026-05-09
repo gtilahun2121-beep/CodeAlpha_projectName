@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Shop - Home</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">E-Shop</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li id="admin-link" style="display: none;"><a href="admin.html">Admin</a></li>
+                <li><a href="cart.html" id="cart-link">Cart <span id="cart-count">0</span></a></li>
+                <li id="auth-links">
+                    <a href="auth.html">Login</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Welcome to E-Shop</h1>
+            <p>Find the best products at the best prices.</p>
+            <div class="search-container" style="margin-top: 2rem; display: flex; justify-content: center; gap: 10px;">
+                <input type="text" id="search-input" placeholder="Search for products..." style="padding: 0.8rem 1.5rem; width: 300px; border-radius: 50px; border: none; outline: none; font-size: 1rem;">
+                <button class="btn btn-primary" onclick="handleSearch()" style="margin-top: 0; padding: 0.8rem 2rem;">Search</button>
+            </div>
+        </section>
+
+        <section class="products">
+            <h2>Featured Products</h2>
+            <div id="product-list" class="product-grid">
+                <!-- Products will be loaded here -->
+                <p>Loading products...</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 E-Shop. All rights reserved.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>

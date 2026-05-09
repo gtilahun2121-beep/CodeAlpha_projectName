@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Shop - My Orders</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">E-Shop</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="cart.html">Cart <span id="cart-count">0</span></a></li>
+                <li id="auth-links">
+                    <a href="auth.html">Login</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Your Order History</h1>
+        <div id="order-list">
+            <p>Loading your orders...</p>
+        </div>
+    </main>
+
+    <script src="js/app.js"></script>
+    <script>
+        async function loadOrders() {
+            const token = getToken();
+            if (!token) {
+                window.location.href = 'auth.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/orders`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const orders = await response.json();
+                const orderList = document.getElementById('order-list');
+
+                if (orders.length === 0) {
+                    orderList.innerHTML = '<p>You have no orders yet.</p>';
+                    return;
+                }
+
+                orderList.innerHTML = orders.map(order => `
+                    <div class="cart-item" style="flex-direction: column; align-items: flex-start; gap: 1rem;">
+                        <div style="display: flex; justify-content: space-between; width: 100%; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">
+                            <strong>Order ID: ${order.id.substring(0, 8)}...</strong>
+                            <span style="color: var(--ethio-green); font-weight: bold;">Status: ${order.status}</span>
+                        </div>
+                        <div>
+                            <p><strong>Date:</strong> ${new Date(order.createdAt).toLocaleDateString()}</p>
+                            <p><strong>Total:</strong> $${order.total.toFixed(2)}</p>
+                            <div style="margin-top: 0.5rem;">
+                                <strong>Items:</strong>
+                                <ul style="list-style: none; margin-top: 0.5rem;">
+                                    ${order.items.map(item => `<li>${item.name} x ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                document.getElementById('order-list').innerHTML = '<p>Error loading orders.</p>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadOrders);
+    </script>
+</body>
+</html>
