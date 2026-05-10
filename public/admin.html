@@ -9,7 +9,7 @@
 <body>
     <header>
         <nav>
-            <div class="logo">E-Shop Admin</div>
+            <div class="logo">Simple Store Admin</div>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="#" onclick="logout()">Logout</a></li>
@@ -89,8 +89,8 @@
                 list.innerHTML = orders.map(order => `
                     <div class="cart-item" style="flex-direction: column; align-items: flex-start; gap: 0.5rem; border-left: 5px solid var(--ethio-green);">
                         <div style="display: flex; justify-content: space-between; width: 100%;">
-                            <strong>Order #${order.id.substring(0, 8)}</strong>
-                            <span>Customer: <strong>${order.User.username}</strong> (${order.User.email})</span>
+                            <strong>Order #${order._id.substring(0, 8)}</strong>
+                            <span>Customer: <strong>${order.userId.username}</strong> (${order.userId.email})</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; width: 100%;">
                             <span>Date: ${new Date(order.createdAt).toLocaleString()}</span>

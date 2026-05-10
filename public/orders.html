@@ -9,7 +9,7 @@
 <body>
     <header>
         <nav>
-            <div class="logo">E-Shop</div>
+            <div class="logo">Simple Store</div>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="cart.html">Cart <span id="cart-count">0</span></a></li>
@@ -51,7 +51,7 @@
                 orderList.innerHTML = orders.map(order => `
                     <div class="cart-item" style="flex-direction: column; align-items: flex-start; gap: 1rem;">
                         <div style="display: flex; justify-content: space-between; width: 100%; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">
-                            <strong>Order ID: ${order.id.substring(0, 8)}...</strong>
+                            <strong>Order ID: ${order._id.substring(0, 8)}...</strong>
                             <span style="color: var(--ethio-green); font-weight: bold;">Status: ${order.status}</span>
                         </div>
                         <div>

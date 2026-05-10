@@ -1,82 +1,74 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('./db');
+const mongoose = require('mongoose');
 
-const User = sequelize.define('User', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true
-  },
+const userSchema = new mongoose.Schema({
   username: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    type: String,
+    required: true,
     unique: true
   },
   email: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    type: String,
+    required: true,
     unique: true
   },
   password: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: String,
+    required: true
   },
   role: {
-    type: DataTypes.ENUM('user', 'admin'),
-    defaultValue: 'user'
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user'
   }
-});
+}, { timestamps: true });
 
-const Product = sequelize.define('Product', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true
-  },
+const productSchema = new mongoose.Schema({
   name: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: String,
+    required: true
   },
   description: {
-    type: DataTypes.TEXT
+    type: String
   },
   price: {
-    type: DataTypes.FLOAT,
-    allowNull: false
+    type: Number,
+    required: true
   },
   image: {
-    type: DataTypes.STRING
+    type: String
   },
   category: {
-    type: DataTypes.STRING
+    type: String
   },
   stock: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0
+    type: Number,
+    default: 0
   }
-});
+}, { timestamps: true });
 
-const Order = sequelize.define('Order', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true
+const orderSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   },
   total: {
-    type: DataTypes.FLOAT,
-    allowNull: false
+    type: Number,
+    required: true
   },
   status: {
-    type: DataTypes.ENUM('pending', 'completed', 'cancelled'),
-    defaultValue: 'pending'
+    type: String,
+    enum: ['pending', 'completed', 'cancelled'],
+    default: 'pending'
   },
   items: {
-    type: DataTypes.JSON, // Storing order items as JSON for simplicity
-    allowNull: false
+    type: Array,
+    required: true
   }
-});
+}, { timestamps: true });
 
-User.hasMany(Order);
-Order.belongsTo(User);
+const User = mongoose.model('User', userSchema);
+const Product = mongoose.model('Product', productSchema);
+const Order = mongoose.model('Order', orderSchema);
 
 module.exports = { User, Product, Order };

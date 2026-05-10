@@ -46,15 +46,23 @@ async function handleRegister(event) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, email, password })
         });
-        const data = await response.json();
+        
+        let data;
+        try {
+            data = await response.json();
+        } catch (e) {
+            data = { message: 'Server error. Please check database connection.' };
+        }
+
         if (response.ok) {
             alert('Registration successful! Please login.');
             toggleAuth();
         } else {
-            alert(data.message);
+            alert(data.message || 'Registration failed');
         }
     } catch (error) {
-        alert('Registration failed');
+        console.error('Registration error:', error);
+        alert('Network error or server is down.');
     }
 }
 

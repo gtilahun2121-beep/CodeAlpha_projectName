@@ -31,7 +31,7 @@ function renderProducts(products) {
                 <p>${product.description}</p>
                 <p class="price">$${product.price.toFixed(2)}</p>
                 <button class="btn btn-primary" onclick='addToCart(${JSON.stringify(product)})'>Add to Cart</button>
-                <a href="product.html?id=${product.id}" class="btn">Details</a>
+                <a href="product.html?id=${product._id}" class="btn">Details</a>
             </div>
         </div>
     `).join('');

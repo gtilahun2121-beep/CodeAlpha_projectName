@@ -1,5 +1,8 @@
 // API Base URL
-const API_URL = '/api';
+// Replace the empty string with your Render URL once deployed (e.g., 'https://your-app.onrender.com/api')
+const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+    ? '/api' 
+    : 'https://simple-e-comerce-store-backend.onrender.com/api'; 
 
 // Cart Logic
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -24,7 +27,7 @@ function addToCart(product) {
 }
 
 function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
+    cart = cart.filter(item => item._id !== productId);
     saveCart();
     updateCartCount();
     if (typeof renderCart === 'function') {

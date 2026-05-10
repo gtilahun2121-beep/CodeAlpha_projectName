@@ -21,7 +21,7 @@ function renderCart() {
                 <p>Price: $${item.price.toFixed(2)} x ${item.quantity}</p>
             </div>
             <div class="item-actions">
-                <button class="btn" onclick="removeFromCart('${item.id}')">Remove</button>
+                <button class="btn" onclick="removeFromCart('${item._id}')">Remove</button>
             </div>
         </div>
     `).join('');
